@@ -18,15 +18,15 @@ def main():
 	past = []
 	for i in range(0,n):
 		past.append("")
-
+	
+	blank = list(past)
 	for imfile in sys.argv[2:-1]:
 		im = Image.open(imfile)
 		wordDict["size"].append(im.size)
 		pixels = list(im.getdata())
 		width, height = im.size
 		#pixels = [pixels[i * width:(i + 1) * width] for i in xrange(height)]
-		for i in range(0,n):
-			past[i] = ""
+		past = list(blank)
 
 		print "total is " + str(width*height)
 		for i in range(0,width*height):
