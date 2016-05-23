@@ -44,6 +44,11 @@ def main():
 	#print "Storing dictionary"
 	#pickle.dump(wordDict, open(outfile, "wb"))
 	
+	for i in range(5):
+		print "saving image " +str(i) 
+		makeImage(wordDict, outfile +str(i)+".jpg")
+	
+def makeImage(wordDict, outfile):
 	width, height = random.choice(wordDict["size"])
 	n = wordDict["n"]
 	past = [""]*n
@@ -51,13 +56,15 @@ def main():
 	print "predicting"
 	for i in range(0, height*width):
 		key = tuple(past)
+		if not wordDict.has_key(key):
+			past = [""]*n
+			key = tuple(past)
 		cur = random.choice(wordDict.get(key, [(0,0,0)]))
 		outPixels.append(cur)
 		
 		past.pop(0)
 		past.append(cur)
 
-	print "saving image"
 	outImage = Image.new("RGB", (width, height))
 	outImage.putdata(outPixels)
 	outImage.save(outfile)
