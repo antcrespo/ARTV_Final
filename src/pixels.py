@@ -28,7 +28,7 @@ def main():
 		#pixels = [pixels[i * width:(i + 1) * width] for i in xrange(height)]
 		past = list(blank)
 
-		print "total is " + str(width*height)
+		print imfile + " " + str(width) + "x" + str(height)
 		for i in range(0,width*height):
 			#if (i%1000 == 0):
 				#print i
@@ -41,8 +41,26 @@ def main():
 
 			past.pop(0)
 			past.append(cur)
-	print "Storing dictionary"
-	pickle.dump(wordDict, open(outfile, "wb"))
+	#print "Storing dictionary"
+	#pickle.dump(wordDict, open(outfile, "wb"))
+	
+	width, height = random.choice(wordDict["size"])
+	n = wordDict["n"]
+	past = [""]*n
+	outPixels = []
+	print "predicting"
+	for i in range(0, height*width):
+		key = tuple(past)
+		cur = random.choice(wordDict.get(key, [(0,0,0)]))
+		outPixels.append(cur)
+		
+		past.pop(0)
+		past.append(cur)
+
+	print "saving image"
+	outImage = Image.new("RGB", (width, height))
+	outImage.putdata(outPixels)
+	outImage.save(outfile)
 
 if __name__ == "__main__":
 	main()

@@ -21,6 +21,7 @@ def main():
 		past.pop(0)
 		past.append(cur)
 
+	print "saving image"
 	outImage = Image.new("RGB", (width, height))
 	outImage.putdata(outPixels)
 	outImage.save(outfile)
